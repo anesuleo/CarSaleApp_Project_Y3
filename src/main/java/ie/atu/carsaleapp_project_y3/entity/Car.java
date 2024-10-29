@@ -1,6 +1,8 @@
 package ie.atu.carsaleapp_project_y3.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -19,19 +21,20 @@ public class Car {
     private int car_id;
 
     @Column(name = "make")
-    @NotBlank(message="This field can not be blank")
+    @NotBlank(message="make is not be blank")
     private String make;
 
     @Column(name = "model")
-    @NotBlank(message="This field can not be blank")
+    @NotBlank(message="model is not be blank")
     private String model;
 
     @Column(name = "year")
-    @NotNull(message="This value can not be 0")
+    @Min(value = 1950,message = "car is too old")
+    @Max(value =2025,message = "invalid year")
     private int year;
 
     @Column(name = "cost")
-    @NotNull(message="This value can not be 0")
+    @NotNull(message="cost cannot be 0")
     private float cost;
 
     @OneToOne(cascade = CascadeType.ALL)
