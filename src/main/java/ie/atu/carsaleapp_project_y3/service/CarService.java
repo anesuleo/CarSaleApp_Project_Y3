@@ -25,4 +25,8 @@ public class CarService {
         return carRepository.findAll();
     }
 
+    public Optional<Car> getCarById(Long id) {
+        return carRepository.findById(id);
+    }
+
 }
