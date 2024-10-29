@@ -1,9 +1,8 @@
 package ie.atu.carsaleapp_project_y3.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,14 +14,23 @@ import lombok.NoArgsConstructor;
 @Table(name = "Car_info")
 public class CarInfo {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "info_id")
     private int info_id;
-    @Column(name = "car_id")
-    private int car_id;
+
     @Column(name = "colour")
+    @NotBlank(message = "This field can not be blank")
     private String colour;
+
     @Column(name = "engine_size")
+    @NotNull(message = "This value can not be 0")
     private float engine_size;
+
     @Column(name = "horsepower")
+    @NotNull(message = "This value can not be 0")
     private int horsepower;
+
+    @OneToOne
+    @JoinColumn(name = "car_id", referencedColumnName = "car_id")
+    private Car car;
 }
