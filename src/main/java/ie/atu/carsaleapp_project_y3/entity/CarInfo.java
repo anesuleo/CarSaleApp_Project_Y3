@@ -19,15 +19,15 @@ public class CarInfo {
     private int info_id;
 
     @Column(name = "colour")
-    @NotBlank(message = "This field can not be blank")
+    @NotBlank(message = "colour cannot be blank")
     private String colour;
 
     @Column(name = "engine_size")
-    @NotNull(message = "This value can not be 0")
+    @NotNull(message = "engine_size cannot be 0")
     private float engine_size;
 
     @Column(name = "horsepower")
-    @NotNull(message = "This value can not be 0")
+    @NotNull(message = "horsepower cannot be 0")
     private int horsepower;
 
     @OneToOne
