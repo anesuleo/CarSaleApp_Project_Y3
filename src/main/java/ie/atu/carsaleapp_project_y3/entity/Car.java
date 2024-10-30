@@ -35,7 +35,7 @@ public class Car {
 
     @Column(name = "cost")
     @NotNull(message="cost cannot be 0")
-    private float cost;
+    private double cost;
 
     @OneToOne(cascade = CascadeType.ALL)
     private CarInfo carInfo;
