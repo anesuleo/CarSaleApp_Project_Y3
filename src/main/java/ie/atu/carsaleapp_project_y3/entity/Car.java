@@ -21,11 +21,11 @@ public class Car {
     private int car_id;
 
     @Column(name = "make")
-    @NotBlank(message="make is not be blank")
+    @NotBlank(message="make cannot be blank")
     private String make;
 
     @Column(name = "model")
-    @NotBlank(message="model is not be blank")
+    @NotBlank(message="model cannot be blank")
     private String model;
 
     @Column(name = "year")

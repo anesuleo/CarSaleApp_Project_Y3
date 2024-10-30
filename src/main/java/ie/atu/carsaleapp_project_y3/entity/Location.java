@@ -22,14 +22,14 @@ public class  Location {
     private String county;
 
     @Column(name = "country")
-    @NotBlank(message = "country is not blank")
+    @NotBlank(message = "country cannot be blank")
     private String country;
 
     @Column(name = "city")
-    @NotBlank(message = "city is not blank")
+    @NotBlank(message = "city cannot be blank")
     private String city;
 
     @Column(name = "eircode")
-    @NotBlank(message = "eircode is not blank")
+    @NotBlank(message = "eircode cannot be blank")
     private String eircode;
 }
