@@ -18,7 +18,7 @@ public class  Location {
     private int location_id;
 
     @Column(name = "county")
-    @NotBlank(message = "county is not blank")
+    @NotBlank(message = "county cannot be blank")
     private String county;
 
     @Column(name = "country")
