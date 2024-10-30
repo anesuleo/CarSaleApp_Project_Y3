@@ -24,14 +24,14 @@ public class Store {
     private int customer_id;
 
     @Column(name = "store_name")
-    @NotBlank(message = "storeName not blank")
+    @NotBlank(message = "storeName cannot blank")
     private String storeName;
 
     @Column(name = "store_city")
-    @NotBlank(message ="storeCity not blank")
+    @NotBlank(message ="storeCity cannot blank")
     private String storeCity;
 
     @Column(name = "store_county")
-    @NotBlank(message = "storeCounty not blank")
+    @NotBlank(message = "storeCounty cannot blank")
     private String storeCounty;
 }
