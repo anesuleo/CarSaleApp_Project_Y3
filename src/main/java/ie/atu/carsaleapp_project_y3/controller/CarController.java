@@ -24,9 +24,6 @@ public class CarController {
         this.carService =carService;
         this.customerClient =customerClient;
     }
-
-
-
     @PostMapping("/addCar")
     public Car addCar(@Valid @RequestBody Car car) {
         return carService.addCar(car);
@@ -43,7 +40,7 @@ public class CarController {
 
         return car.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
-    //fetch all customers from customer service
+    //fetch all customers from customer service using customer client
     @GetMapping("/allCustomers")
     public List<Customer> getAllCustomersFromCustomerService(){
         return customerClient.getAllCustomer();
