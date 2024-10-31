@@ -1,10 +1,11 @@
 package ie.atu.carsaleapp_project_y3.service;
 
 import ie.atu.carsaleapp_project_y3.entity.Car;
+import ie.atu.carsaleapp_project_y3.entity.Customer;
+import ie.atu.carsaleapp_project_y3.feignclients.CustomerClient;
 import ie.atu.carsaleapp_project_y3.repository.CarRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,9 +13,14 @@ import java.util.Optional;
 public class CarService {
 
     private final CarRepository carRepository;
+    private final CustomerClient customerClient;
 
-    public CarService(CarRepository carRepository){
+    public CarService(CarRepository carRepository, CustomerClient customerClient){
         this.carRepository = carRepository;
+        this.customerClient = customerClient;
+    }
+    public List<Customer> getAllCustomersFromCustomerService() {
+        return customerClient.getAllCustomer();
     }
 
     public Car addCar(Car car) {
