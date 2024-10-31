@@ -30,7 +30,7 @@ public class StoreController {
         return storeService.addStore(store);
     }
 
-    @GetMapping("/allstores")
+    @GetMapping("/allStores")
     public List<Store> getAllStores(){
         return storeService.getAllStores();
     }
