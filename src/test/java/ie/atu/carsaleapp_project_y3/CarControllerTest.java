@@ -3,6 +3,9 @@ package ie.atu.carsaleapp_project_y3;
 
 import ie.atu.carsaleapp_project_y3.controller.CarController;
 import ie.atu.carsaleapp_project_y3.entity.Car;
+import ie.atu.carsaleapp_project_y3.entity.Customer;
+import ie.atu.carsaleapp_project_y3.entity.Store;
+import ie.atu.carsaleapp_project_y3.feignclients.CarClient;
 import ie.atu.carsaleapp_project_y3.service.CarService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +31,9 @@ public class CarControllerTest {
 @MockBean
     private CarService carService;    //mock version of carService
 
+    @MockBean
+    private CarClient carClient;
+
 private Car createCarTest() {
     Car car = new Car();
     car.setCar_id(1);
@@ -36,6 +42,26 @@ private Car createCarTest() {
     car.setYear(2021);
     car.setCost(5000.50);
     return car;
+}
+private Customer createCustomerTest(){
+    Customer customer =new Customer();
+    customer.setCustomer_id(1);
+    customer.setFirstName("Nat");
+    customer.setLastName("Chiyaka");
+    customer.setPhoneNo(911);
+    customer.setEmail("Nat@gmail.com");
+    return customer;
+}
+
+private Store createStoreTest(){
+    Store store = new Store();
+    store.setStore_id(1);
+    store.setCar_id(2);
+    store.setCustomer_id(6);
+    store.setStoreName("Store");
+    store.setStoreCity("Dundalk");
+    store.setStoreCounty("Louth");
+    return store;
 }
 @Test
     public void testGetAllCars() throws Exception{
@@ -76,6 +102,19 @@ private Car createCarTest() {
             .andExpect(jsonPath("$.car_id").value(car.getCar_id()));
 
 }
+/*@Test
+    public void testGetAllCustomersFromCustomerService() throws Exception{
+    Customer customer = createCustomerTest();
+    when(carClient.getAllCustomer()).thenReturn(Collections.singletonList(customer));
 
+    mockMvc.perform(MockMvcRequestBuilders.get("/cars/allCustomers"))
+
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$[0].customerId").value(customer.getCustomer_id()))
+            .andExpect(jsonPath("$[0].firstName").value(customer.getFirstName()))
+            .andExpect(jsonPath("$[0].lastName").value(customer.getLastName()))
+            .andExpect(jsonPath("$[0].phoneNo"));
+}
+*/
 
 }

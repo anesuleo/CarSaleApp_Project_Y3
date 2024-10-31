@@ -1,0 +1,38 @@
+.centered-heading {
+    text-align: center;
+}
+body{
+    background-color: darkblue;
+    color:white;
+}
+button{
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+}
+button:hover{
+    background-color: darkgrey;
+    transition: background-color 0.3s;
+}
+.login-screen{
+    display: flex;
+    flex-direction: column;
+    /*justify-content: center;*/
+    align-items: center;
+    height: 100vh;
+}
+p{
+    text-align: center;
+}
+.button-container {
+    display: flex;
+    gap: 10px; /* Add space between buttons */
+    margin-top: 20px;
+}
+.button-container button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
