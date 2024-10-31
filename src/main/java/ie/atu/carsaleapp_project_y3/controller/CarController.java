@@ -6,31 +6,29 @@ import ie.atu.carsaleapp_project_y3.entity.Store;
 import ie.atu.carsaleapp_project_y3.feignclients.CarClient;
 import ie.atu.carsaleapp_project_y3.service.CarService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
-
 @RestController
 @RequestMapping("/cars")
 public class CarController {
     private final CarService carService;
     private final CarClient carClient;
-    @Autowired
-    public CarController(CarService carService, CarClient customerClient){
-        this.carService =carService;
 
-        this.carClient =customerClient;
+    public CarController(CarService myService, CarClient carClient){
+        this.carService = myService;
+        this.carClient = carClient;
     }
+
     @PostMapping("/addCar")
     public Car addCar(@Valid @RequestBody Car car) {
         return carService.addCar(car);
     }
 
-    @GetMapping("/allCars")
+    @GetMapping("/allcars")
     public List<Car> getAllCars() {
         return carService.getAllCars();
     }
@@ -41,14 +39,14 @@ public class CarController {
 
         return car.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
-    //fetch all customers from customer service using car client
+    //fetch customers from customer service using carClient
     @GetMapping("/allCustomers")
-    public List<Customer> getAllCustomersFromCustomerService(){
+    public List<Customer> getAllCustomer(){
         return carClient.getAllCustomer();
     }
-//fetch all stores from store service using car client
-@GetMapping("/allStores")
-public List<Store> getAllStores(){
-    return carClient.getAllStores();
-}
+    //fetch stores from store service using carClient
+    @GetMapping("/allStores")
+    public List<Store> getAllStores(){
+        return carClient.getAllStores();
+    }
 }
