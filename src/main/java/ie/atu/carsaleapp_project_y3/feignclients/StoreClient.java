@@ -6,12 +6,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
-//customer to access cars,//CarService communicating with customerService
-@FeignClient(name="car-service", url ="http://localhost:8080")
-public interface CarClient {
+
+//store  access cars
+@FeignClient(name ="store-service",url ="http://localhost:8080")
+public interface StoreClient {
     @GetMapping("/cars/allCars")
     List<Car>getAllCars();
 
     @GetMapping("/cars/{id}")
-      Car getCarById(@PathVariable Long id);
+    Car getCarById(@PathVariable Long id);
 }

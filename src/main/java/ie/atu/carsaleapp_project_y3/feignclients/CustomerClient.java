@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-//CarService communicating with customerService
+//CarService communicating with customerService,cars to access customers,
 @FeignClient(name = "customer-service", url="http://localhost:8080")
 public interface CustomerClient {
     @GetMapping("/customer/allCustomers")

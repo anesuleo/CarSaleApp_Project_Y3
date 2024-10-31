@@ -1,8 +1,11 @@
 package ie.atu.carsaleapp_project_y3.controller;
 
+import ie.atu.carsaleapp_project_y3.entity.Car;
 import ie.atu.carsaleapp_project_y3.entity.Store;
+import ie.atu.carsaleapp_project_y3.feignclients.StoreClient;
 import ie.atu.carsaleapp_project_y3.service.StoreService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,10 +16,12 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/store")
 public class StoreController {
-    private StoreService storeService;
-
-    public StoreController(StoreService myService){
+    private final StoreService storeService;
+    private final StoreClient storeClient;
+    @Autowired
+    public StoreController(StoreService myService, StoreClient storeClient){
         this.storeService = myService;
+        this.storeClient = storeClient;
     }
 
     @PostMapping("/addStore")
@@ -36,4 +41,9 @@ public class StoreController {
         return store.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    //fetch all cars from carservice using storeclient
+    @GetMapping("/allCars")
+    public List<Car> getAllCars() {
+        return storeClient.getAllCars();
+    }
 }
