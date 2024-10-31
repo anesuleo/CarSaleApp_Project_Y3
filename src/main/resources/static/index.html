@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car_Sale Page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1 class="centered-heading">Welcome to Car Sale App</h1>
+    <div class="login-screen" id="login-screen">
+        <p>Select the desired option to proceed</p>
+        <div class="button-container">
+        <button onclick="selectRole('admin')">Admin Login</button>
+        <button onclick="selectRole('customer')">Customer Login</button>
+        </div>
+    </div>
+
+    <div id="customer-section" style="display: none;">
+        <button onclick="fetchData()">Get Cars</button>
+        <button onclick="goBackToHome()">Back to Home</button>
+        <div id="output"></div>
+    </div>
+
+    <div id="admin-section" style="display: none;">
+        <p>Welcome, Admin!</p>
+        <p>Enter log in details</p>
+        <form action="/login" method="POST" class="login-form">
+            <h2>Login</h2>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Log In</button>
+        </form>
+        <button onclick="goBackToHome()">Back to Home</button>
+    </div>
+
+
+
+
+    <script src="script.js"><</script>
+</body>
+</html>

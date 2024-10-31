@@ -36,4 +36,8 @@ public class Customer {
     @Email(message = "put valid email")
     private String email;
 
+    @Column(name="password")
+    @NotBlank(message = "Password can not be blank")
+    private String password;
+
 }
