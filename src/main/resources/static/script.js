@@ -9,7 +9,7 @@ function selectRole(role) {
     }
 }
 function fetchData(){
-    fetch('http://localhost:8080/cars/allCars')
+    fetch('http://localhost:8080/cars/allcars')
         .then(response => response.json())
         .then(data => {
 
