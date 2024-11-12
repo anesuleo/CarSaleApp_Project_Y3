@@ -19,6 +19,11 @@ public class CustomerService {
     }
 
     public Customer addCustomer(Customer customer){
+        Optional<Customer> existingCustomer = customerRepository.findByEmail(customer.getEmail());
+        if (existingCustomer.isPresent()) {
+            throw new IllegalArgumentException("A customer with this email already exists.");
+        }
+
         return customerRepository.save(customer);
     }
 
@@ -26,8 +31,10 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
-    public Optional<Customer> getCarById(Long id) {
-        return customerRepository.findById(id);
+
+    // Method to find a customer by email for login
+    public Optional<Customer> findByEmail(String email) {
+        return customerRepository.findByEmail(email);
     }
 
 }
