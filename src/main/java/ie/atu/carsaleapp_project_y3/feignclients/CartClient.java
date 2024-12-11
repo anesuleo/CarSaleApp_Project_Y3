@@ -11,5 +11,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface CartClient {
     @PostMapping
     public String makeCart(@RequestBody Car car);
-    public ResponseEntity<String> addToCart(@RequestBody Car car, @RequestParam("userId") int userId);
+    //public ResponseEntity<String> addToCart(@RequestBody Car car, @RequestParam("userId") int userId);
 }
