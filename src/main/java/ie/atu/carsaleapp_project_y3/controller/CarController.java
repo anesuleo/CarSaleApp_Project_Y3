@@ -4,8 +4,10 @@ import ie.atu.carsaleapp_project_y3.entity.Car;
 import ie.atu.carsaleapp_project_y3.entity.Customer;
 import ie.atu.carsaleapp_project_y3.entity.Store;
 import ie.atu.carsaleapp_project_y3.feignclients.CarClient;
+import ie.atu.carsaleapp_project_y3.feignclients.CartClient;
 import ie.atu.carsaleapp_project_y3.service.CarService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,15 +20,22 @@ import java.util.Optional;
 public class CarController {
     private final CarService carService;
     private final CarClient carClient;
+    private final CartClient cartClient;
 
-    public CarController(CarService myService, CarClient carClient){
+    public CarController(CarService myService, CarClient carClient, CartClient cartClient){
         this.carService = myService;
         this.carClient = carClient;
+        this.cartClient = cartClient;
     }
 
     @PostMapping("/addCar")
-    public Car addCar(@Valid @RequestBody Car car) {
-        return carService.addCar(car);
+    public ResponseEntity<String> addCar(@Valid @RequestBody Car car) {
+        carService.addCar(car);
+        String details = cartClient.makeCart(car);
+        System.out.println(details);
+
+
+        return new ResponseEntity<>("Car Created Successfully", HttpStatus.OK);
     }
 
     @GetMapping("/allcars")
