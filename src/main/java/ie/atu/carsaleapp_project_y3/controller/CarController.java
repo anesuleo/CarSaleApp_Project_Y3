@@ -34,6 +34,7 @@ public class CarController {
         String details = cartClient.makeCart(car);
         System.out.println(details);
 
+
         return new ResponseEntity<>("Car Created Successfully", HttpStatus.OK);
     }
 
