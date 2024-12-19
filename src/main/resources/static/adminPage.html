@@ -7,6 +7,7 @@
 </head>
 <body>
 <div class="menu">
+    <button onclick="navigateTo('index.html')">Home</button>
     <button onclick="fetchData()">Get Car Data</button>
 
     <div id="output"></div>
@@ -25,6 +26,24 @@
 
         <button type="submit">Add Car</button>
     </form>
+    <div class="form-container">
+        <form id="customer-form">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" required>
+
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phoneNumber">Phone Number:</label>
+            <input type="tel" id="phoneNumber" name="phoneNumber" required>
+
+            <button type="button" id="submitButton">Add Customer</button>
+        </form>
+        <div id="message" class="message"></div>
+    </div>
 </div>
 <script src="admin.js"></script>
 </body>
