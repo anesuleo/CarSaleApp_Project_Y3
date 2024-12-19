@@ -4,7 +4,6 @@ import ie.atu.carsaleapp_project_y3.entity.Car;
 import ie.atu.carsaleapp_project_y3.entity.Customer;
 import ie.atu.carsaleapp_project_y3.entity.Store;
 import ie.atu.carsaleapp_project_y3.feignclients.CarClient;
-import ie.atu.carsaleapp_project_y3.feignclients.CartClient;
 import ie.atu.carsaleapp_project_y3.service.CarService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -20,21 +19,15 @@ import java.util.Optional;
 public class CarController {
     private final CarService carService;
     private final CarClient carClient;
-    private final CartClient cartClient;
 
-    public CarController(CarService myService, CarClient carClient, CartClient cartClient){
+    public CarController(CarService myService, CarClient carClient){
         this.carService = myService;
         this.carClient = carClient;
-        this.cartClient = cartClient;
     }
 
     @PostMapping("/addCar")
     public ResponseEntity<String> addCar(@Valid @RequestBody Car car) {
         carService.addCar(car);
-        String details = cartClient.makeCart(car);
-        System.out.println(details);
-
-
         return new ResponseEntity<>("Car Created Successfully", HttpStatus.OK);
     }
 
