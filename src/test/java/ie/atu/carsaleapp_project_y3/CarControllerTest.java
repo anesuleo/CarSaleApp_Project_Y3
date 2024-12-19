@@ -3,7 +3,6 @@ package ie.atu.carsaleapp_project_y3;
 
 import ie.atu.carsaleapp_project_y3.controller.CarController;
 import ie.atu.carsaleapp_project_y3.entity.Car;
-import ie.atu.carsaleapp_project_y3.entity.Customer;
 import ie.atu.carsaleapp_project_y3.entity.Store;
 import ie.atu.carsaleapp_project_y3.feignclients.CarClient;
 import ie.atu.carsaleapp_project_y3.service.CarService;
@@ -43,15 +42,15 @@ private Car createCarTest() {
     car.setCost(5000.50);
     return car;
 }
-private Customer createCustomerTest(){
-    Customer customer =new Customer();
-    customer.setCustomer_id(1);
-    customer.setFirstName("Nat");
-    customer.setLastName("Chiyaka");
-    customer.setPhoneNo(911);
-    customer.setEmail("Nat@gmail.com");
-    return customer;
-}
+//private Customer createCustomerTest(){
+//    Customer customer =new Customer();
+//    customer.setCustomer_id(1);
+//    customer.setFirstName("Nat");
+//    customer.setLastName("Chiyaka");
+//    customer.setPhoneNo(911);
+//    customer.setEmail("Nat@gmail.com");
+//    return customer;
+//}
 
 private Store createStoreTest(){
     Store store = new Store();

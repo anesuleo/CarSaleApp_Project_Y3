@@ -10,9 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
-@CrossOrigin(origins ="http://localhost:63342" )
+@CrossOrigin(origins ="*" )
 @RestController
 @RequestMapping("/cars")
 public class CarController {
@@ -40,14 +41,28 @@ public class CarController {
 
         return car.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
-    //fetch customers from customer service using carClient
     @GetMapping("/allCustomers")
-    public List<Customer> getAllCustomer(){
-        return carClient.getAllCustomer();
+    public List<Customer> fetchAllCustomers() {
+        return carClient.getAllCustomers();
     }
+    @PostMapping("/customer/login")
+    public ResponseEntity<Map<String, Object>> loginCustomer(@RequestBody Customer loginRequest) {
+        return carClient.login(loginRequest);
+    }
+    @PostMapping("/customer/add")
+    public Customer addNewCustomer(@RequestBody Customer customer) {
+        return carClient.addCustomer(customer);
+    }
+    @PostMapping("/customer/register")
+    public ResponseEntity<Customer> registerCustomer(@RequestBody Customer customer) {
+        return carClient.registerCustomer(customer);
+    }
+
+    //fetch customers from customer service using carClient
+
     //fetch stores from store service using carClient
-    @GetMapping("/allStores")
-    public List<Store> getAllStores(){
-        return carClient.getAllStores();
-    }
+//    @GetMapping("/allStores")
+//    public List<Store> getAllStores(){
+//        return carClient.getAllStores();
+//    }
 }
