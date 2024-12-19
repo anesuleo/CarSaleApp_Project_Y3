@@ -19,3 +19,6 @@ document.getElementById("admin-login-form").addEventListener("submit", function(
         output.style.color = "red";
     }
 });
+function navigateTo(url) {
+    window.location.href = url;
+}
