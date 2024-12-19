@@ -16,9 +16,5 @@ public interface StoreClient {
 
     @GetMapping("/cars/{id}")
     Car getCarById(@PathVariable Long id);
-    @GetMapping("/customer/allCustomers")
-    List<Customer> getAllCustomer();
 
-    @GetMapping("/customer/{id}")
-    Customer getCustomerById(@PathVariable Long id);
 }
