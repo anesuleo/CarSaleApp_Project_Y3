@@ -38,6 +38,11 @@ function fetchData(){
         .catch(error => console.error('Error:', error));
 }
 
+document.addEventListener('DOMContentLoaded', function (){
+    fetchDisplayData();
+    fetchCartData();
+});
+
 function fetchDisplayData(){
     fetch('http://localhost:8080/cars/allcars')
         .then(response => response.json())
@@ -69,7 +74,13 @@ function fetchDisplayData(){
                     </tr>`;
             });
             output += `</tbody></table>`;
-            document.getElementById('output').innerHTML = output;
+
+            const outputElement = document.getElementById('output');
+            if(outputElement){
+                outputElement.innerHTML = output;
+            } else{
+                console.error('Output element not found');
+            }
 
             const addButtons = document.querySelectorAll('.add-to-cart');
             addButtons.forEach(button => {
@@ -79,11 +90,52 @@ function fetchDisplayData(){
         .catch(error => console.error('Error:', error));
 }
 
+function addToCart(event){
+    const button = event.target;
+    const car = {
+        car_id: button.getAttribute('data-car-id'),
+        make: button.getAttribute('data-make'),
+        model: button.getAttribute('data-model'),
+        year: button.getAttribute('data-year'),
+        cost: parseFloat(button.getAttribute('data-cost')),
+    };
+
+    console.log('Adding car to cart:', car);
+
+    if (!car.car_id || !car.make || !car.model || !car.year || isNaN(car.cost)) {
+        console.error('Invalid car data:', car);
+        alert('Failed to add car to cart due to missing data.');
+        return;
+    }
+
+    fetch(`http://localhost:8081/cart/add/${car.car_id}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(car),
+    })
+        .then(response => response.json())
+        .then(cart => {
+            console.log('Cart updated:', cart);
+            alert(`Car with ID ${car.car_id} has been added to your cart`);
+            fetchCartData();
+        })
+        .catch(error => {
+            console.error('Error adding car to cart:', error);
+        });
+}
+
 function fetchCartData(){
     fetch('http://localhost:8081/cart/allcart')
         .then(response => response.json())
         .then(cart => {
-            displayCart(cart.items);
+            //console.log('Cart data:', cart);
+            if(cart && cart.items){
+                displayCart(cart.items);
+            } else {
+                console.log('No cart items found:', cart);
+            }
         })
         .catch(error => {
             console.error('Error fetching cart data:', error);
@@ -93,6 +145,8 @@ function fetchCartData(){
 function displayCart(cartItems){
     const cartTableBody = document.querySelector('#cart-table tbody');
     const totalPriceSpan = document.getElementById('total-price');
+
+    console.log('Displaying cart items:', cartItems);
 
     if (!cartTableBody) {
         console.error('Cart table body not found in DOM.');
@@ -126,9 +180,6 @@ function displayCart(cartItems){
         button.addEventListener('click', removeFromCart);
     });
 }
-document.addEventListener('DOMContentLoaded', () => {
-    fetchCartData(); // Ensure this runs after the DOM is ready
-});
 
 function removeFromCart(event){
     const car_id = event.target.getAttribute('data-car-id');
@@ -148,45 +199,6 @@ function removeFromCart(event){
 
 }
 
-function addToCart(event){
-    const button = event.target;
-    const car = {
-        car_id: button.getAttribute('data-car-id'),
-        make: button.getAttribute('data-make'),
-        model: button.getAttribute('data-model'),
-        year: button.getAttribute('data-year'),
-        cost: parseFloat(button.getAttribute('data-cost')),
-    };
-
-    console.log('Adding car to cart:', car);
-
-    if (!car.car_id || !car.make || !car.model || !car.year || isNaN(car.cost)) {
-        console.error('Invalid car data:', car);
-        alert('Failed to add car to cart due to missing data.');
-        return;
-    }
-
-    fetch('http://localhost:8081/cart/add/{car_id}', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(car),
-    })
-        .then(response => response.json())
-        .then(cart => {
-            console.log('Cart updated:', cart);
-            alert(`Car with ID ${car.car_id} has been added to your cart`);
-            fetchCartData();
-        })
-        .catch(error => {
-            console.error('Error adding car to cart:', error);
-        });
-}
-window.onload = function () {
-    fetchDisplayData();
-    fetchCartData();
-}
 
 function goBackToHome() {
     // Hide both Admin and Customer sections
