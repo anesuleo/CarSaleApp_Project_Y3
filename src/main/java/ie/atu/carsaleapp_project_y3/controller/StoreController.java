@@ -1,7 +1,6 @@
 package ie.atu.carsaleapp_project_y3.controller;
 
 import ie.atu.carsaleapp_project_y3.entity.Car;
-import ie.atu.carsaleapp_project_y3.entity.Customer;
 import ie.atu.carsaleapp_project_y3.entity.Store;
 import ie.atu.carsaleapp_project_y3.feignclients.StoreClient;
 import ie.atu.carsaleapp_project_y3.service.StoreService;
@@ -48,8 +47,8 @@ public class StoreController {
         return storeClient.getAllCars();
     }
     //fetch all customers from customer service using store client
-    @GetMapping("/allCustomers")
-    public List<Customer> getAllCustomersFromCustomerService(){
-        return storeClient.getAllCustomer();
-    }
+//    @GetMapping("/allCustomers")
+//    public List<Customer> getAllCustomersFromCustomerService(){
+//        return storeClient.getAllCustomer();
+//    }
 }

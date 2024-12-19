@@ -3,7 +3,6 @@ package ie.atu.carsaleapp_project_y3;
 
 import ie.atu.carsaleapp_project_y3.controller.CarController;
 import ie.atu.carsaleapp_project_y3.entity.Car;
-import ie.atu.carsaleapp_project_y3.entity.Customer;
 import ie.atu.carsaleapp_project_y3.entity.Store;
 import ie.atu.carsaleapp_project_y3.feignclients.CarClient;
 import ie.atu.carsaleapp_project_y3.service.CarService;

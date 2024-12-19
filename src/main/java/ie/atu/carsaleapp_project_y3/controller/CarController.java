@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @CrossOrigin(origins ="http://localhost:63342" )
@@ -42,14 +43,27 @@ public class CarController {
 
         return car.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
-    //fetch customers from customer service using carClient
+//accessing customer through feign
     @GetMapping("/allCustomers")
-    public List<Customer> getAllCustomer(){
-        return carClient.getAllCustomer();
+    public List<Customer> fetchAllCustomers() {
+        return carClient.getAllCustomers();
     }
+    @PostMapping("/login")
+    public ResponseEntity<Map<String, Object>> loginCustomer(@RequestBody Customer loginRequest) {
+        return carClient.login(loginRequest);
+    }
+    @PostMapping("/add")
+    public Customer addNewCustomer(@RequestBody Customer customer) {
+        return carClient.addCustomer(customer);
+    }
+    @PostMapping("/register")
+    public ResponseEntity<Customer> registerCustomer(@RequestBody Customer customer) {
+        return carClient.registerCustomer(customer);
+    }
+
     //fetch stores from store service using carClient
-    @GetMapping("/allStores")
-    public List<Store> getAllStores(){
-        return carClient.getAllStores();
-    }
+//    @GetMapping("/allStores")
+//    public List<Store> getAllStores(){
+//        return carClient.getAllStores();
+//    }
 }
