@@ -149,6 +149,7 @@ function fetchData(){
     function displayCart(cartItems) {
         const cartTableBody = document.getElementById('cart-table-body');
         const totalPriceSpan = document.getElementById('total-cost');
+        const checkoutButton = document.getElementById('checkout-button');
         let totalCost = 0;
 
         if (!cartTableBody) {
@@ -194,10 +195,24 @@ function fetchData(){
 
         totalPriceSpan.textContent =`Total: $${totalCost.toFixed(2)}`;
 
+        if (checkoutButton) {
+            checkoutButton.addEventListener('click', () => checkoutCart(cartItems, totalCost));
+        }
+}
+
+function checkoutCart(cartItems, totalCost) {
+    if (cartItems.length === 0){
+        alert('Your cart is empty. Add items before checking out.');
+    }
+    alert(`Checkout successful! Total cost: $${totalCost.toFixed(2)}.`);
+    console.log('Checkout completed with items:', cartItems);
+
+    // Clear the cart
+    cartItems.forEach(item => removeFromCart(item.cart_id));
+    fetchCartData();
 }
 
 function removeFromCart(cart_id, row, cost, totalPriceSpan) {
-    //const car_id = event.target.getAttribute('data-car-id');
 
     if (!cart_id) {
         alert('Cart ID is missing. Cannot remove item.');
