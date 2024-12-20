@@ -1,3 +1,5 @@
+
+
 document.getElementById("admin-login-form").addEventListener("submit", function(event) {
     event.preventDefault();
 
@@ -80,6 +82,7 @@ function addCar() {
         })
         .catch(error => console.error('Error:', error));
 }
+
 document.getElementById('submitButton').addEventListener('click', async () => {
     // Get form values
     const firstName = document.getElementById('firstName').value;
@@ -118,4 +121,41 @@ document.getElementById('submitButton').addEventListener('click', async () => {
         document.getElementById('message').textContent = `Error: ${error.message}`;
         document.getElementById('message').style.color = 'red';
     }
+
 });
+
+function deleteCar() {
+    // Get the car ID from the input field
+    const car_id = document.getElementById('car-id').value;
+
+    console.log('Car ID to delete:', car_id);
+
+    // Validate if carId is provided
+    if (!car_id) {
+        alert('Please provide a Car ID to delete.');
+        return;
+    }
+
+    // Send a DELETE request to delete the car
+    fetch(`http://localhost:8080/cars/delete/${car_id}`, {
+        method: 'DELETE',
+    })
+        .then(response => {
+            console.log('Response status:', response.status); // Check the status
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.text(); // Assuming server responds with JSON
+        })
+        .then(data => {
+            console.log('Response data:', data); // Log the string response
+            alert(`Car with ID ${car_id} has been deleted successfully.`);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while deleting the car.');
+        });
+}
+
+});
+

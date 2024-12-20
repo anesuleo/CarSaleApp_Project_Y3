@@ -34,4 +34,15 @@ public class CarService {
         return carRepository.findById(id);
     }
 
+    public String deleteCarById(Long car_id) {
+        Optional<Car> car = carRepository.findById(car_id); // Fetch the car by ID
+
+        if (car.isPresent()) {
+            carRepository.delete(car.get()); // Delete the found car entity
+            return "Car deleted successfully.";
+        } else {
+            return "Car not found.";
+        }
+    }
+
 }

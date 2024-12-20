@@ -44,7 +44,7 @@ public class CarController {
 
         return car.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
-//accessing customer through feign
+    //accessing customer through feign
     @GetMapping("/allCustomers")
     public List<Customer> fetchAllCustomers() {
         return carClient.getAllCustomers();
@@ -65,6 +65,15 @@ public class CarController {
     public ResponseEntity<String> updateCustomerPassword(@PathVariable String email, @RequestBody Map<String, String> passwordRequest) {
         return carClient.updatePassword(email, passwordRequest);
     }
+
+
+    @DeleteMapping("/delete/{car_id}")
+    public ResponseEntity<String> deleteCar(@PathVariable Long car_id) {
+        String result = carService.deleteCarById(car_id);
+        return ResponseEntity.ok(result); // Respond with the result message
+    }
+
+
     //fetch stores from store service using carClient
 //    @GetMapping("/allStores")
 //    public List<Store> getAllStores(){
