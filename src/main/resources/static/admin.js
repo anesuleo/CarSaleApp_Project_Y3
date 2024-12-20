@@ -157,5 +157,5 @@ function deleteCar() {
         });
 }
 
-});
+
 
