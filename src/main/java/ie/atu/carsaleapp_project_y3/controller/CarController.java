@@ -61,7 +61,10 @@ public class CarController {
     public ResponseEntity<Customer> registerCustomer(@RequestBody Customer customer) {
         return carClient.registerCustomer(customer);
     }
-
+    @PutMapping("/updatePassword/{email}")
+    public ResponseEntity<String> updateCustomerPassword(@PathVariable String email, @RequestBody Map<String, String> passwordRequest) {
+        return carClient.updatePassword(email, passwordRequest);
+    }
     //fetch stores from store service using carClient
 //    @GetMapping("/allStores")
 //    public List<Store> getAllStores(){
