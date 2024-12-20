@@ -6,7 +6,11 @@ function showCustomerLogin() {
     document.getElementById('Customer-login').style.display = 'none';
     document.getElementById('customer-login-section').style.display = 'block';
 }
-
+// Show the password reset form
+function showResetPasswordForm() {
+    document.getElementById('customer-login-section').style.display = 'none';
+    document.getElementById('reset-password-section').style.display = 'block';
+}
 // Show the registration form
 function showRegisterSection() {
     document.getElementById('customer-login-section').style.display = 'none';
@@ -23,31 +27,69 @@ function hide(clickedButton) {
     });
 }
 
-// Handle customer login form submission
+// Handle customer login form submission, if the customer fails to input the correct password 3 times consecutively they can reset the password.
 function loginCustomer(event) {
     event.preventDefault();
-    const email = document.getElementById('customer-email').value;
-    const password = document.getElementById('customer-password').value;
+    const email = document.getElementById('customer-email').value.trim();
+    const password = document.getElementById('customer-password').value.trim();
+
     fetch('http://localhost:8080/cars/login', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({email, password})
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
     })
         .then(response => response.json())
         .then(data => {
             if (data.success) {
                 alert("Login successful!");
                 fetchData(); // Load car data on successful login
+                loginAttempts = 0; // Reset attempts on success
             } else {
                 document.getElementById('login-error').textContent = data.message || "Incorrect login. Try again.";
                 document.getElementById('login-error').style.display = 'block';
                 loginAttempts++;
                 if (loginAttempts >= 3) {
                     alert("3 attempts exceeded. Please reset your password.");
+                    showResetPasswordForm(); // Show reset password form
                 }
             }
         })
         .catch(error => console.error('Login error:', error));
+}
+
+// Handle password reset form submission
+function resetCustomerPassword(event) {
+    event.preventDefault();
+    const email = document.getElementById('reset-email').value.trim();
+    const newPassword = document.getElementById('new-password').value.trim();
+
+    console.log("Reset Password Attempt", { email, newPassword });
+
+    if (!email || !newPassword) {
+        alert('Please fill in all fields.');
+        return;
+    }
+
+    fetch(`http://localhost:8080/cars/updatePassword/${email}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({password: newPassword }),
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(err => {
+                    throw new Error(err.message || 'Failed to reset password');
+                });
+            }
+            return response.text();
+        })
+        .then(message => {
+            alert(message || 'Password updated successfully!');
+            showCustomerLogin();
+        })
+        .catch(error => {
+            alert(error.message);
+        });
 }
 
 // Handle customer registration form submission
