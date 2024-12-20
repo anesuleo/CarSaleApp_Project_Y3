@@ -13,9 +13,11 @@
     <div id="Customer-login">
         <button onclick="showCustomerLogin(); hide(this)">Login as Registered User</button>
         <button onclick="fetchData(); hide(this)">Continue as Guest</button>
+        <button onclick="showRegisterSection(); hide(this)">Register an Account</button>
         <div id="output"></div>
     </div>
 </div>
+
 <!-- Customer login form for registered users -->
 <div id="customer-login-section" style="display: none;">
     <h2>Customer Login</h2>
@@ -27,8 +29,8 @@
         <button type="submit">Log In</button>
     </form>
     <p id="login-error" style="color:#ff0000; display: none;">Incorrect login. Try again or create an account.</p>
-    <button onclick="showRegisterSection()">Create Account</button>
 </div>
+
 <!-- Password Reset Form -->
 <div id="reset-password-section" style="display: none;">
     <h2>Reset Password</h2>
@@ -41,6 +43,7 @@
     </form>
     <button onclick="showCustomerLogin()">Back to Login</button>
 </div>
+
 <!-- Registration form -->
 <div id="register-section" style="display: none;">
     <h2>Customer Registration</h2>
@@ -59,12 +62,13 @@
     </form>
     <button onclick="showCustomerLogin()">Back to Login</button>
 </div>
+
 <div id="back-home-container">
     <button> <a href="index.html">Back to Home</a></button>
 </div>
+
 <script src="customer.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
-
 
