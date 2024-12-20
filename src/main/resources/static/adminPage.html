@@ -25,6 +25,13 @@
 
         <button type="submit">Add Car</button>
     </form>
+    <form onsubmit="event.preventDefault(); deleteCar();">
+        <h3>Delete Car</h3>
+        <label for="car-id">Car ID:</label>
+        <input type="number" id="car-id" name="car-id" required><br><br>
+
+        <button type="submit">Delete Car</button>
+    </form>
 </div>
 <script src="admin.js"></script>
 </body>

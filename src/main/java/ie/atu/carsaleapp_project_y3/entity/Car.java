@@ -18,7 +18,7 @@ public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "car_id")
-    private int car_id;
+    private Long car_id;
 
     @Column(name = "make")
     @NotBlank(message="make cannot be blank")

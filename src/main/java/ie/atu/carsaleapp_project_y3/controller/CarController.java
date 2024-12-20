@@ -61,6 +61,12 @@ public class CarController {
         return carClient.registerCustomer(customer);
     }
 
+    @DeleteMapping("/delete/{car_id}")
+    public ResponseEntity<String> deleteCar(@PathVariable Long car_id) {
+        String result = carService.deleteCarById(car_id);
+        return ResponseEntity.ok(result); // Respond with the result message
+    }
+
     //fetch stores from store service using carClient
 //    @GetMapping("/allStores")
 //    public List<Store> getAllStores(){
