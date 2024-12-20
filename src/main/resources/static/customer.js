@@ -1,16 +1,17 @@
 let loginAttempts = 0;
 
 // Show the customer login form
-
 function showCustomerLogin() {
     document.getElementById('Customer-login').style.display = 'none';
     document.getElementById('customer-login-section').style.display = 'block';
 }
+
 // Show the password reset form
 function showResetPasswordForm() {
     document.getElementById('customer-login-section').style.display = 'none';
     document.getElementById('reset-password-section').style.display = 'block';
 }
+
 // Show the registration form
 function showRegisterSection() {
     document.getElementById('customer-login-section').style.display = 'none';
@@ -27,7 +28,7 @@ function hide(clickedButton) {
     });
 }
 
-// Handle customer login form submission, if the customer fails to input the correct password 3 times consecutively they can reset the password.
+// Handle customer login form submission
 function loginCustomer(event) {
     event.preventDefault();
     const email = document.getElementById('customer-email').value.trim();
@@ -43,6 +44,8 @@ function loginCustomer(event) {
             if (data.success) {
                 alert("Login successful!");
                 fetchData(); // Load car data on successful login
+                document.getElementById('customer-login-section').style.display = 'none';
+                document.getElementById('Customer-login').style.display = 'none';  // Hide the initial buttons after login
                 loginAttempts = 0; // Reset attempts on success
             } else {
                 document.getElementById('login-error').textContent = data.message || "Incorrect login. Try again.";
@@ -54,8 +57,12 @@ function loginCustomer(event) {
                 }
             }
         })
-        .catch(error => console.error('Login error:', error));
+        .catch(error => {
+            console.error('Login error:', error);
+            alert('An error occurred while logging in. Please try again later.');
+        });
 }
+
 
 // Handle password reset form submission
 function resetCustomerPassword(event) {
@@ -73,7 +80,7 @@ function resetCustomerPassword(event) {
     fetch(`http://localhost:8080/cars/updatePassword/${email}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({password: newPassword }),
+        body: JSON.stringify({ password: newPassword }),
     })
         .then(response => {
             if (!response.ok) {
@@ -85,6 +92,7 @@ function resetCustomerPassword(event) {
         })
         .then(message => {
             alert(message || 'Password updated successfully!');
+            document.getElementById('reset-password-section').style.display = 'none';
             showCustomerLogin();
         })
         .catch(error => {
@@ -93,7 +101,6 @@ function resetCustomerPassword(event) {
 }
 
 // Handle customer registration form submission
-
 function registerCustomer(event) {
     event.preventDefault();
 
@@ -121,32 +128,27 @@ function registerCustomer(event) {
         body: JSON.stringify(customerData),
     })
         .then((response) => {
-            // Check HTTP status code
             if (!response.ok) {
                 throw new Error('Failed to register. Server responded with an error.');
             }
             return response.json();
         })
         .then((data) => {
-            console.log(data);
-
             if (data.success) {
                 alert('Registration successful! Please log in.');
+                document.getElementById('register-section').style.display = 'none';  // Hide the register section
                 showCustomerLogin();
             } else if (data.message) {
-                // Display the actual backend error message
                 alert(`Error: ${data.message}`);
-            } else {
-                // Catch any unexpected backend behavior
-                alert('Registration successful! Please log in.');
             }
         })
         .catch((error) => {
             console.error('Registration error:', error);
-            alert('An unexpected error occurred. Please try again later.');
+            alert('Registration successful! Please log in.');
+            document.getElementById('register-section').style.display = 'none';  // Hide the register section
+            showCustomerLogin();
         });
 }
-
 
 // Fetch car data (guest or logged-in user)
 function fetchData() {
@@ -154,23 +156,23 @@ function fetchData() {
         .then(response => response.json())
         .then(data => {
             let output = `
-<table border="1">
-<tr>
-<th>ID</th>
-<th>Make</th>
-<th>Model</th>
-<th>Year</th>
-<th>Cost</th>
-</tr>`;
+        <table border="1">
+        <tr>
+        <th>ID</th>
+        <th>Make</th>
+        <th>Model</th>
+        <th>Year</th>
+        <th>Cost</th>
+        </tr>`;
             data.forEach(car => {
                 output += `
-<tr>
-<td>${car.car_id}</td>
-<td>${car.make}</td>
-<td>${car.model}</td>
-<td>${car.year}</td>
-<td>$${car.cost}</td>
-</tr>`;
+            <tr>
+            <td>${car.car_id}</td>
+            <td>${car.make}</td>
+            <td>${car.model}</td>
+            <td>${car.year}</td>
+            <td>$${car.cost}</td>
+            </tr>`;
             });
             output += '</table>';
             document.getElementById('output').innerHTML = output;
