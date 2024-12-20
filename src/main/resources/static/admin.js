@@ -82,6 +82,47 @@ function addCar() {
         })
         .catch(error => console.error('Error:', error));
 }
+
+document.getElementById('submitButton').addEventListener('click', async () => {
+    // Get form values
+    const firstName = document.getElementById('firstName').value;
+    const lastName = document.getElementById('lastName').value;
+    const email = document.getElementById('email').value;
+    const phoneNumber = document.getElementById('phoneNo').value;
+
+    // Create the payload
+    const customerData = {
+        firstName,
+        lastName,
+        email,
+        phoneNumber
+    };
+
+    try {
+        // Send POST request using fetch API
+        const response = await fetch('http://localhost:8080/cars/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(customerData)
+        });
+
+        // Handle response
+        const result = await response.json();
+        if (response.ok) {
+            document.getElementById('message').textContent = 'Customer added successfully!';
+            document.getElementById('message').style.color = 'green';
+        } else {
+            document.getElementById('message').textContent = `Error: ${result.message || 'Failed to add customer.'}`;
+            document.getElementById('message').style.color = 'red';
+        }
+    } catch (error) {
+        document.getElementById('message').textContent = `Error: ${error.message}`;
+        document.getElementById('message').style.color = 'red';
+    }
+});
+
 function deleteCar() {
     // Get the car ID from the input field
     const car_id = document.getElementById('car-id').value;
