@@ -43,7 +43,7 @@ public class CarController {
 
         return car.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
-//accessing customer through feign
+    //accessing customer through feign
     @GetMapping("/allCustomers")
     public List<Customer> fetchAllCustomers() {
         return carClient.getAllCustomers();
@@ -59,6 +59,10 @@ public class CarController {
     @PostMapping("/register")
     public ResponseEntity<Customer> registerCustomer(@RequestBody Customer customer) {
         return carClient.registerCustomer(customer);
+    }
+    @PutMapping("/updatePassword/{email}")
+    public ResponseEntity<String> updateCustomerPassword(@PathVariable String email, @RequestBody Map<String, String> passwordRequest) {
+        return carClient.updatePassword(email, passwordRequest);
     }
 
     @DeleteMapping("/delete/{car_id}")
