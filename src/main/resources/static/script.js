@@ -89,6 +89,7 @@ function fetchData(){
     function addToCart(event) {
         const button = event.target;
         const car = {
+            cart_id: button.getAttribute('data-cart-id'),
             car_id: button.getAttribute('data-car-id'),
             make: button.getAttribute('data-make'),
             model: button.getAttribute('data-model'),
@@ -164,7 +165,7 @@ function fetchData(){
 
             console.log('Item data:', cartItems);
 
-
+            const cart_id = cartItems.cart_id || 'N/A'; // Fallback if property doesn't exist
             const car_id = cartItems.car_id || 'N/A'; // Fallback if property doesn't exist
             const make = cartItems.make || 'N/A';
             const model = cartItems.model || 'N/A';
@@ -175,6 +176,7 @@ function fetchData(){
 
             const row = document.createElement('tr');
             row.innerHTML = `
+            <td>${cart_id}</td>
             <td>${car_id}</td>
             <td>${make}</td>
             <td>${model}</td>
@@ -186,7 +188,7 @@ function fetchData(){
 
             const removeButton = row.querySelector('.remove-btn');
             removeButton.addEventListener('click', () => {
-                removeFromCart(car_id, row, cost, totalPriceSpan);
+                removeFromCart(cart_id, row, cost, totalPriceSpan);
             });
         });
 
@@ -194,15 +196,15 @@ function fetchData(){
 
 }
 
-function removeFromCart(car_id, row, cost, totalPriceSpan) {
+function removeFromCart(cart_id, row, cost, totalPriceSpan) {
     //const car_id = event.target.getAttribute('data-car-id');
 
-    if (!car_id) {
-        alert('Car ID is missing. Cannot remove item.');
+    if (!cart_id) {
+        alert('Cart ID is missing. Cannot remove item.');
         return;
     }
 
-    fetch(`http://localhost:8081/cart/${car_id}`, {
+    fetch(`http://localhost:8081/cart/${cart_id}`, {
         method: 'DELETE',
     })
         .then(response => {
@@ -212,7 +214,7 @@ function removeFromCart(car_id, row, cost, totalPriceSpan) {
             return response.text();
         })
         .then(data => {
-            alert(`Car with ${car_id} has been removed from your cart.`);
+            alert(`Car with cart ID ${cart_id} has been removed from your cart.`);
             row.remove();
 
             let currentTotal = parseFloat(totalPriceSpan.textContent.replace('Total: $', '')) || 0;
