@@ -121,6 +121,7 @@ document.getElementById('submitButton').addEventListener('click', async () => {
         document.getElementById('message').textContent = `Error: ${error.message}`;
         document.getElementById('message').style.color = 'red';
     }
+
 });
 
 function deleteCar() {
@@ -155,3 +156,6 @@ function deleteCar() {
             alert('An error occurred while deleting the car.');
         });
 }
+
+});
+

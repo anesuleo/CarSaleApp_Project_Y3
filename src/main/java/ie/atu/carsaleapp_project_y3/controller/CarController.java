@@ -14,7 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-@CrossOrigin(origins ="http://localhost:63342" )
+//http://localhost:63342
+@CrossOrigin(origins ="*" )
 @RestController
 @RequestMapping("/cars")
 public class CarController {
@@ -65,11 +66,13 @@ public class CarController {
         return carClient.updatePassword(email, passwordRequest);
     }
 
+
     @DeleteMapping("/delete/{car_id}")
     public ResponseEntity<String> deleteCar(@PathVariable Long car_id) {
         String result = carService.deleteCarById(car_id);
         return ResponseEntity.ok(result); // Respond with the result message
     }
+
 
     //fetch stores from store service using carClient
 //    @GetMapping("/allStores")

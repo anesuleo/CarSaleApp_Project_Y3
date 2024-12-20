@@ -7,6 +7,7 @@
 </head>
 <body>
 <div class="menu">
+    <button onclick="navigateTo('index.html')">Home</button>
     <button onclick="fetchData()">Get Car Data</button>
 
     <div id="output"></div>
@@ -25,6 +26,7 @@
 
         <button type="submit">Add Car</button>
     </form>
+
     <form onsubmit="event.preventDefault(); deleteCar();">
         <h3>Delete Car</h3>
         <label for="car-id">Car ID:</label>
@@ -32,6 +34,7 @@
 
         <button type="submit">Delete Car</button>
     </form>
+
 
     <div class="form-container">
         <form id="customer-form">
