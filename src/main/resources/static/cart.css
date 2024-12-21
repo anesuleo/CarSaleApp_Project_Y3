@@ -1,0 +1,123 @@
+/* cart.css */
+
+/* General body styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+    text-align: center;
+}
+
+/* Header styling */
+h1 {
+    background-color: #4CAF50;
+    color: white;
+    padding: 20px 0;
+    margin: 0;
+}
+
+/* Table styling */
+#cart-table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+}
+
+#cart-table th,
+#cart-table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+#cart-table th {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+}
+
+#cart-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#cart-table tr:hover {
+    background-color: #ddd;
+}
+
+/* Center the car table */
+#car-table-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+}
+
+#car-table-section h2 {
+    color: #4CAF50;
+    margin-bottom: 20px;
+}
+
+#car-table-section table {
+    border-collapse: collapse;
+    width: 80%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+}
+
+#car-table-section th,
+#car-table-section td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+#car-table-section th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#car-table-section tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#car-table-section tr:hover {
+    background-color: #ddd;
+}
+
+
+/* Cart total section */
+#cart-total h3 {
+    font-size: 24px;
+    margin: 20px 0;
+    color: #4CAF50;
+}
+
+/* Buttons styling */
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 10px 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#back-home-container button a {
+    color: white;
+    text-decoration: none;
+}
+
+#back-home-container button a:hover {
+    text-decoration: underline;
+}
