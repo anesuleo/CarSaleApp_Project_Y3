@@ -1,0 +1,99 @@
+/* General body styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+    text-align: center;
+}
+
+/* Page title styling */
+h1 {
+    margin: 20px 0;
+    font-size: 32px;
+    color: #4CAF50;
+}
+
+/* Admin login container styling */
+.admin-login {
+    margin: 20px auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    width: 40%;
+    max-width: 500px;
+    text-align: left;
+}
+
+.admin-login label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.admin-login input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Button styling */
+.admin-login button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+.admin-login button:hover {
+    background-color: #45a049;
+}
+
+/* Back to Home button container */
+#back-home-container {
+    margin-top: 20px;
+}
+
+#back-home-container button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+#back-home-container button:hover {
+    background-color: #45a049;
+}
+
+#back-home-container button a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+}
+
+#back-home-container button a:hover {
+    text-decoration: underline;
+}
+
+/* Output section styling (if used) */
+#output {
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #333;
+    text-align: center;
+}
