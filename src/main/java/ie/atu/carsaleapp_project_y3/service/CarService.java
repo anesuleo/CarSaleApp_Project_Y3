@@ -45,4 +45,16 @@ public class CarService {
         }
     }
 
+    public boolean updateCarPrice(Long car_id, Double newPrice) {
+        Optional<Car> carOptional = carRepository.findById(car_id);
+
+        if (carOptional.isPresent()) {
+            Car car = carOptional.get();
+            car.setCost(newPrice); // Update the price
+            carRepository.save(car); // Save the updated car back to the database
+            return true;
+        } else {
+            return false; // Car not found
+        }
+    }
 }

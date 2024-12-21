@@ -157,5 +157,43 @@ function deleteCar() {
         });
 }
 
+function updateCarPrice() {
+    const car_id = document.getElementById('car-id-update').value;
+    const newPrice = document.getElementById('new-price').value;
 
+    if (!car_id || !newPrice) {
+        alert('Please provide both Car ID and the new price.');
+        return;
+    }
+
+    // Create the payload with the new price
+    const priceUpdateData = {
+        cost: newPrice
+    };
+
+    fetch(`http://localhost:8080/cars/updatePrice/${car_id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(priceUpdateData)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.text(); // Assuming server responds with JSON
+        })
+        .then(data => {
+            if (data === "Car price updated successfully.") {
+                alert(`Car price updated successfully for Car ID ${car_id}.`);
+            } else {
+                alert(`Failed to update price: ${data.message || 'Unknown error'}`);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while updating the car price.');
+        });
+}
 

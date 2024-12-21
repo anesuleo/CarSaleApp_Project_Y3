@@ -73,6 +73,23 @@ public class CarController {
         return ResponseEntity.ok(result); // Respond with the result message
     }
 
+    @PutMapping("/updatePrice/{car_id}")
+    public ResponseEntity<String> updatePrice(@PathVariable Long car_id, @RequestBody Map<String, Double> priceRequest) {
+        Double newPrice = priceRequest.get("cost");
+
+        if (newPrice == null || newPrice <= 0) {
+            return ResponseEntity.badRequest().body("Invalid price provided");
+        }
+
+        boolean isUpdated = carService.updateCarPrice(car_id, newPrice);
+
+        if (isUpdated) {
+            return ResponseEntity.ok("Car price updated successfully.");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Car not found.");
+        }
+    }
+
 
     //fetch stores from store service using carClient
 //    @GetMapping("/allStores")
