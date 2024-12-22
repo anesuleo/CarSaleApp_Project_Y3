@@ -153,7 +153,12 @@ function registerCustomer(event) {
 // Fetch car data (guest or logged-in user)
 function fetchData() {
     fetch('http://localhost:8080/cars/allcars')
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => {
             let output = `
         <table border="1">
@@ -175,7 +180,13 @@ function fetchData() {
             </tr>`;
             });
             output += '</table>';
-            document.getElementById('output').innerHTML = output;
+            const outputDiv = document.getElementById('output');
+            outputDiv.innerHTML = output;
+            outputDiv.style.display = 'block'; // Ensure the output is visible
         })
-        .catch(error => console.error('Error fetching cars:', error));
+        .catch(error => {
+            console.error('Error fetching cars:', error);
+            alert('Failed to fetch cars. Please try again later.');
+        });
 }
+
