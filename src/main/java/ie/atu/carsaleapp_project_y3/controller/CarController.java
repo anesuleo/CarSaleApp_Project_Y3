@@ -1,5 +1,6 @@
 package ie.atu.carsaleapp_project_y3.controller;
 
+import ie.atu.carsaleapp_project_y3.MessageQueues.MessageProducer;
 import ie.atu.carsaleapp_project_y3.entity.Car;
 import ie.atu.carsaleapp_project_y3.entity.Customer;
 import ie.atu.carsaleapp_project_y3.entity.Store;
@@ -21,15 +22,18 @@ import java.util.Optional;
 public class CarController {
     private final CarService carService;
     private final CarClient carClient;
+    private final MessageProducer messageProducer;
 
-    public CarController(CarService myService, CarClient carClient){
+    public CarController(CarService myService, CarClient carClient, MessageProducer messageProducer){
         this.carService = myService;
         this.carClient = carClient;
+        this.messageProducer = messageProducer;
     }
 
     @PostMapping("/addCar")
     public ResponseEntity<String> addCar(@Valid @RequestBody Car car) {
         carService.addCar(car);
+        messageProducer.sendMessage("cart.routing.key", "carId=" + car.getCar_id() + ", action=ADD");
         return new ResponseEntity<>("Car Created Successfully", HttpStatus.OK);
     }
 
@@ -70,6 +74,7 @@ public class CarController {
     @DeleteMapping("/delete/{car_id}")
     public ResponseEntity<String> deleteCar(@PathVariable Long car_id) {
         String result = carService.deleteCarById(car_id);
+        messageProducer.sendMessage("cart.routing.key", "carId=" + car_id + ", action=REMOVE");
         return ResponseEntity.ok(result); // Respond with the result message
     }
 
