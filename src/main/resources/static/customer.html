@@ -7,10 +7,25 @@
     <link rel="stylesheet" href="customer.css">
 </head>
 <body>
+<header>
+    <div class="cart-container">
+        <a href="shoppingCart.html" class="cart-button">
+            🛒
+            <span class="cart-count">0</span>
+        </a>
+    </div>
+    <div class="user-container">
+        <a href="customer.html" class="sign-in-button">
+            👤
+            <span class="username">Sign In</span>
+        </a>
+    </div>
+</header>
 <div id="customer">
     <p>Welcome to the Customer section. Choose Login Method:</p>
     <div id="Customer-login">
-        <button onclick="showCustomerLogin(); hide(this)">Login as Registered User</button>
+        <!--<button onclick="showCustomerLogin(); hide(this)">Login as Registered User</button>-->
+        <button><a href="custLoggedIn.html">Login as Registered User</a></button>
         <button onclick="fetchData(); hide(this)">Continue as Guest</button>
         <button onclick="showRegisterSection(); hide(this)">Register an Account</button>
         <!--<div id="output"></div> -->

@@ -8,6 +8,41 @@ body {
     text-align: center;
 }
 
+/* Header styling */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+}
+
+header .cart-container,
+header .user-container {
+    display: flex;
+    align-items: center;
+}
+
+header .cart-button,
+header .sign-in-button {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    position: relative;
+}
+
+header .cart-count {
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 3px 7px;
+    font-size: 14px;
+    position: absolute;
+    top: -8px;
+    right: -10px;
+}
+
 /* Container for customer section */
 #customer {
     margin-top: 20px;
