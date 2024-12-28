@@ -18,7 +18,7 @@ function hide(clickedButton) {
         }
     });
 }
-// Handle Login for Registered Users
+ // Handle Login for Registered Users
 function loginCustomer(event) {
     event.preventDefault();
     const email = document.getElementById('customer-email').value.trim();
@@ -32,13 +32,14 @@ function loginCustomer(event) {
         .then(data => {
             if (data.success) {
                 alert("Login successful!");
-                showAvailableCars();
+                showAvailableCars(); // Show cars and hide login sections
             } else {
                 handleLoginError(data.message);
             }
         })
         .catch(error => console.error('Login error:', error));
 }
+
 // Handle Guest Login
 function handleGuestLogin() {
     showAvailableCars();
@@ -91,7 +92,13 @@ function registerCustomer(event) {
 
 // Display Available Cars with Cart Logic
 function showAvailableCars() {
+    // Hide login and registration sections
+    document.getElementById('customer-login-section').style.display = 'none'; // Registered login section
+    document.getElementById('register-section').style.display = 'none'; // Registration section
+    document.getElementById('Customer-login').style.display = 'none'; // Main login section
+    // Show available cars
     document.getElementById('car-table-section').style.display = 'block';
+    // Fetch and display cars
     fetch('http://localhost:8080/cars/allcars')
         .then(response => response.json())
         .then(data => {
@@ -108,7 +115,7 @@ function showAvailableCars() {
 </tr>
 </thead>
 <tbody>
-           `;
+     `;
             data.forEach(car => {
                 output += `
 <tr>
@@ -119,16 +126,18 @@ function showAvailableCars() {
 <td>$${car.cost}</td>
 <td><button class="add-to-cart" data-car-id="${car.car_id}">Add to Cart</button></td>
 </tr>
-               `;
+       `;
             });
             output += '</tbody></table>';
             document.getElementById('output').innerHTML = output;
+            // Attach event listeners to "Add to Cart" buttons
             document.querySelectorAll('.add-to-cart').forEach(button => {
                 button.addEventListener('click', addToCart);
             });
         })
         .catch(error => console.error('Error:', error));
 }
+
 // Add Car to Cart
 function addToCart(event) {
     const carId = event.target.getAttribute('data-car-id');
