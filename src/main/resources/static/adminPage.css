@@ -8,6 +8,37 @@ body {
     text-align: center;
 }
 
+/* General table styling */
+table {
+    margin: 20px auto; /* Centers the table horizontally */
+    border-collapse: collapse;
+    width: 80%; /* Adjust width as needed */
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+    font-size: 14px;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
 /* Menu container styling */
 .menu {
     margin: 20px auto;

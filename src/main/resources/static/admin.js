@@ -72,9 +72,9 @@ function addCar() {
         },
         body: JSON.stringify(carData) // Convert carData object to JSON
     })
-        .then(response => response.json()) // Assuming server responds with JSON
+        .then(response => response.text()) // Assuming server responds with JSON
         .then(data => {
-            if (data.success) {
+            if (data === "Car Created Successfully") {
                 alert('Car added successfully!');
             } else {
                 alert('Failed to add car.');
