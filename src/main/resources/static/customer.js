@@ -98,7 +98,7 @@ function resetCustomerPassword(event) {
 
 // Handle Guest Login
 function handleGuestLogin() {
-    showAvailableCars();
+    showCarData();
 }
 
 function registerCustomer(event) {
@@ -194,6 +194,42 @@ function showAvailableCars() {
         .catch(error => console.error('Error:', error));
 }
 
+function showCarData(){
+    // Hide login and registration sections
+    document.getElementById('customer-login-section').style.display = 'none'; // Registered login section
+    document.getElementById('register-section').style.display = 'none'; // Registration section
+    document.getElementById('Customer-login').style.display = 'none'; // Main login section
+    // Show available cars
+    document.getElementById('car-table-section').style.display = 'block';
+    fetch('http://localhost:8080/cars/allcars')
+        .then(response => response.json())
+        .then(data => {
+
+            let output = `
+                <table border="1">
+                    <tr>
+                        <th>ID</th>
+                        <th>Make</th>
+                        <th>Model</th>
+                        <th>Year</th>
+                        <th>Cost</th>
+                    </tr>`;
+            data.forEach(car => {
+                output += `
+                    <tr>
+                        <td>${car.car_id}</td>
+                        <td>${car.make}</td>
+                        <td>${car.model}</td>
+                        <td>${car.year}</td>
+                        <td>$${car.cost}</td>
+                    </tr>`;
+            });
+            output += '</table>';
+            document.getElementById('output').innerHTML = output;
+        })
+        .catch(error => console.error('Error:', error));
+}
+
 // Add Car to Cart
 function addToCart(event) {
     const carId = event.target.getAttribute('data-car-id');
@@ -204,8 +240,4 @@ function addToCart(event) {
         .then(response => response.json())
         .then(() => alert(`Car with ID ${carId} added to cart`))
         .catch(error => console.error('Error adding car to cart:', error));
-}
-
-function goToCart() {
-    window.location.href = 'shoppingCart.html';
 }
