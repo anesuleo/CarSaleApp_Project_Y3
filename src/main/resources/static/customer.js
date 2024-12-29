@@ -4,6 +4,12 @@ function showCustomerLogin() {
     document.getElementById('Customer-login').style.display = 'none';
     document.getElementById('customer-login-section').style.display = 'block';
 }
+// Show the password reset form
+function showResetPasswordForm() {
+    document.getElementById('customer-login-section').style.display = 'none';
+    document.getElementById('reset-password-section').style.display = 'block';
+}
+
 // Show Registration Form
 function showRegisterSection() {
     document.getElementById('Customer-login').style.display = 'none';
@@ -18,7 +24,7 @@ function hide(clickedButton) {
         }
     });
 }
-// Handle Login for Registered Users
+ // Handle Login for Registered Users
 function loginCustomer(event) {
     event.preventDefault();
     const email = document.getElementById('customer-email').value.trim();
@@ -32,13 +38,64 @@ function loginCustomer(event) {
         .then(data => {
             if (data.success) {
                 alert("Login successful!");
-                showAvailableCars();
+                showAvailableCars(); // Show cars and hide login sections
+                document.getElementById('customer-login-section').style.display = 'none';
+                document.getElementById('Customer-login').style.display = 'none';  // Hide the initial buttons after login
+                loginAttempts = 0;
+
             } else {
-                handleLoginError(data.message);
+                document.getElementById('login-error').textContent = data.message || "Incorrect login. Try again.";
+                document.getElementById('login-error').style.display = 'block';
+                loginAttempts++;
+                if (loginAttempts >= 3) {
+                    alert("3 attempts exceeded. Please reset your password.");
+                    showResetPasswordForm(); // Show reset password form
+                }
             }
         })
-        .catch(error => console.error('Login error:', error));
+        .catch(error => {
+            console.error('Login error:', error);
+            alert('An error occurred while logging in. Please try again later.');
+        });
 }
+// Handle password reset form submission
+function resetCustomerPassword(event) {
+    event.preventDefault();
+    const email = document.getElementById('reset-email').value.trim();
+    const newPassword = document.getElementById('new-password').value.trim();
+
+    console.log("Reset Password Attempt", { email, newPassword });
+
+    if (!email || !newPassword) {
+        alert('Please fill in all fields.');
+        return;
+    }
+
+    fetch(`http://localhost:8080/cars/updatePassword/${email}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: newPassword }),
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(err => {
+                    throw new Error(err.message || 'Failed to reset password');
+                });
+            }
+            return response.text();
+        })
+        .then(message => {
+            alert(message || 'Password updated successfully!');
+            document.getElementById('reset-password-section').style.display = 'none';
+            showCustomerLogin();
+        })
+        .catch(error => {
+            alert(error.message);
+        });
+}
+
+
+
 // Handle Guest Login
 function handleGuestLogin() {
     showAvailableCars();
@@ -91,7 +148,13 @@ function registerCustomer(event) {
 
 // Display Available Cars with Cart Logic
 function showAvailableCars() {
+    // Hide login and registration sections
+    document.getElementById('customer-login-section').style.display = 'none'; // Registered login section
+    document.getElementById('register-section').style.display = 'none'; // Registration section
+    document.getElementById('Customer-login').style.display = 'none'; // Main login section
+    // Show available cars
     document.getElementById('car-table-section').style.display = 'block';
+    // Fetch and display cars
     fetch('http://localhost:8080/cars/allcars')
         .then(response => response.json())
         .then(data => {
@@ -108,7 +171,7 @@ function showAvailableCars() {
 </tr>
 </thead>
 <tbody>
-           `;
+     `;
             data.forEach(car => {
                 output += `
 <tr>
@@ -119,16 +182,18 @@ function showAvailableCars() {
 <td>$${car.cost}</td>
 <td><button class="add-to-cart" data-car-id="${car.car_id}">Add to Cart</button></td>
 </tr>
-               `;
+       `;
             });
             output += '</tbody></table>';
             document.getElementById('output').innerHTML = output;
+            // Attach event listeners to "Add to Cart" buttons
             document.querySelectorAll('.add-to-cart').forEach(button => {
                 button.addEventListener('click', addToCart);
             });
         })
         .catch(error => console.error('Error:', error));
 }
+
 // Add Car to Cart
 function addToCart(event) {
     const carId = event.target.getAttribute('data-car-id');
