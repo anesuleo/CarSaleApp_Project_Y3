@@ -90,10 +90,4 @@ public class CarController {
         }
     }
 
-
-    //fetch stores from store service using carClient
-//    @GetMapping("/allStores")
-//    public List<Store> getAllStores(){
-//        return carClient.getAllStores();
-//    }
 }
