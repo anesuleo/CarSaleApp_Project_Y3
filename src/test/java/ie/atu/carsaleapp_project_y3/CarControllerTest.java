@@ -3,6 +3,7 @@ package ie.atu.carsaleapp_project_y3;
 
 import ie.atu.carsaleapp_project_y3.controller.CarController;
 import ie.atu.carsaleapp_project_y3.entity.Car;
+import ie.atu.carsaleapp_project_y3.entity.Customer;
 import ie.atu.carsaleapp_project_y3.entity.Store;
 import ie.atu.carsaleapp_project_y3.feignclients.CarClient;
 import ie.atu.carsaleapp_project_y3.service.CarService;
@@ -35,7 +36,7 @@ public class CarControllerTest {
 
 private Car createCarTest() {
     Car car = new Car();
-    car.setCar_id(1);
+    car.setCar_id(1L);
     car.setMake("Toyota");
     car.setModel("Camry");
     car.setYear(2021);
@@ -47,7 +48,7 @@ private Customer createCustomerTest(){
     customer.setCustomer_id(1);
     customer.setFirstName("Nat");
     customer.setLastName("Chiyaka");
-    customer.setPhoneNo(911);
+    customer.setPhoneNo("9110982918");
     customer.setEmail("Nat@gmail.com");
     return customer;
 }
@@ -98,22 +99,15 @@ private Store createStoreTest(){
                     .contentType("application/json")
                     .content("{\"car_id\":1,\"make\":\"Toyota\",\"model\":\"Camry\",\"year\":2021,\"cost\":5000.50}"))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$.car_id").value(car.getCar_id()));
+            .andExpect(jsonPath("$").value("Car Created Successfully"));
 
 }
-/*@Test
-    public void testGetAllCustomersFromCustomerService() throws Exception{
-    Customer customer = createCustomerTest();
-    when(carClient.getAllCustomer()).thenReturn(Collections.singletonList(customer));
-
-    mockMvc.perform(MockMvcRequestBuilders.get("/cars/allCustomers"))
-
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$[0].customerId").value(customer.getCustomer_id()))
-            .andExpect(jsonPath("$[0].firstName").value(customer.getFirstName()))
-            .andExpect(jsonPath("$[0].lastName").value(customer.getLastName()))
-            .andExpect(jsonPath("$[0].phoneNo"));
-}
-*/
+    @Test
+    public void testInputValidationForAddCar() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/cars/addCar")
+                        .contentType("application/json")
+                        .content("{\"make\":\"\",\"model\":\"\",\"year\":1900,\"cost\":0}"))
+                .andExpect(status().isBadRequest());
+    }
 
 }
